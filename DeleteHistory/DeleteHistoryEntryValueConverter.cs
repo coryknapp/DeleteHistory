@@ -19,13 +19,19 @@ namespace DeleteHistory
         {
             if (value is DeleteHistoryEntry entry)
             {
+                Button button = new Button();
+
+                button.Command = new PasteCommand(entry.DeletedText);
+
                 TextBlock textBlock = new TextBlock();
                 this.AddFileNameText(textBlock, entry.FileName);
                 this.AddDeleteTimeStampText(textBlock, entry.DeleteTime);
                 this.AddNewLine(textBlock);
                 this.AddDeleteHistoryText(textBlock, entry.DeletedText);
 
-                return textBlock;
+                button.Content = textBlock;
+
+                return button;
             }
             throw new Exception("Unknown type sent to DeleteHistoryEntryValueConverter");
         }

@@ -59,6 +59,7 @@
     </Compile>
     <Compile Include="DeleteHistoryEntryValueConverter.cs" />
     <Compile Include="PasteCommand.cs" />
+    <Compile Include="PersistenceService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DeleteHistoryPackage.cs" />
   </ItemGroup>
@@ -87,6 +88,9 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.SDK" Version="17.0.32112.339" ExcludeAssets="runtime" />
     <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="17.8.2368" />
+    <PackageReference Include="System.Text.Json">
+      <Version>8.0.5</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="DeleteHistoryWindowControl.xaml">

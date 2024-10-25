@@ -38,7 +38,9 @@ namespace DeleteHistory
     {
         public static DeleteHistoryPackage Package { get; set; }
 
-        public ObservableCollection<DeleteHistoryEntry> Buttons { get; set; }
+        public ObservableCollection<DeleteHistoryEntry> Entries { get; set; }
+
+        public PersistenceService PersistenceService { get; set; }
 
         /// <summary>
         /// DeleteHistoryPackage GUID string.
@@ -52,24 +54,17 @@ namespace DeleteHistory
             await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
             await DeleteHistoryWindowCommand.InitializeAsync(this);
 
-            this.Buttons = new ObservableCollection<DeleteHistoryEntry>();
+            this.PersistenceService = new PersistenceService();
+
+            this.Entries = new ObservableCollection<DeleteHistoryEntry>(this.PersistenceService.LoadHistory());
 
             Package = this;
         }
 
         public void AddHistory(DeleteHistoryEntry viewModel)
         {
-            Buttons.Add(viewModel);
-        }
-
-        private ICommand ButtonCommand(string text)
-        {
-            return new PasteCommand(text);
-        }
-
-        private string ButtonText(string text)
-        {
-            return text;
+            Entries.Add(viewModel);
+            this.PersistenceService.SaveHistory(Entries);
         }
     }
 }

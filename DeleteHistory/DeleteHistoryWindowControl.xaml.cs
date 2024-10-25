@@ -15,7 +15,7 @@ namespace DeleteHistory
         {
             get
             {
-                return DeleteHistoryPackage.Package.Buttons;
+                return DeleteHistoryPackage.Package.Entries;
             }
         }
 

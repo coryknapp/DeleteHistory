@@ -70,7 +70,6 @@ namespace DeleteHistory
                         FileName = filePath,
                         DeleteTime = DateTime.Now,
                         DeletedText = change.OldText,
-                        ButtonCommand = new PasteCommand(change.OldText),
                     };
 
                     DeleteHistoryPackage.Package.AddHistory(viewModel);
