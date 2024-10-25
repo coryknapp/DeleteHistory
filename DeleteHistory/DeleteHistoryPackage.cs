@@ -38,7 +38,7 @@ namespace DeleteHistory
     {
         public static DeleteHistoryPackage Package { get; set; }
 
-        public ObservableCollection<DeleteHistoryRecordViewModel> Buttons { get; set; }
+        public ObservableCollection<DeleteHistoryEntry> Buttons { get; set; }
 
         /// <summary>
         /// DeleteHistoryPackage GUID string.
@@ -52,12 +52,12 @@ namespace DeleteHistory
             await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
             await DeleteHistoryWindowCommand.InitializeAsync(this);
 
-            this.Buttons = new ObservableCollection<DeleteHistoryRecordViewModel>();
+            this.Buttons = new ObservableCollection<DeleteHistoryEntry>();
 
             Package = this;
         }
 
-        public void AddHistory(DeleteHistoryRecordViewModel viewModel)
+        public void AddHistory(DeleteHistoryEntry viewModel)
         {
             Buttons.Add(viewModel);
         }

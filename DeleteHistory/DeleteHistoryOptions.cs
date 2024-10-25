@@ -28,9 +28,27 @@ namespace DeleteHistory
         public int MinimumLineCount { get; set; } = 0;
 
         [Category("Display")]
+        [DisplayName("Show source file name")]
+        [Description("Display source file in the history window")]
+        [DefaultValue(true)]
+        public bool ShowSourceFileName { get; set; } = true;
+
+        [Category("Display")]
+        [DisplayName("Show Delete Time")]
+        [Description("Display the delete time in the history window")]
+        [DefaultValue(true)]
+        public bool ShowDeleteTime { get; set; } = true;
+
+        [Category("Display")]
         [DisplayName("Truncate lines")]
-        [Description("Only display this many lines in the history window")]
+        [Description("Limit number of lines shown in the history window")]
+        [DefaultValue(false)]
+        public bool TruncateLines{ get; set; } = false;
+
+        [Category("Display")]
+        [DisplayName("Truncate lines")]
+        [Description("Only display this many lines in the history window (if Truncate lines is checked.)")]
         [DefaultValue(12)]
-        public int TruncateLines { get; set; } = 12;
+        public int TruncateLinesCount { get; set; } = 12;
     }
 }

@@ -11,7 +11,7 @@ namespace DeleteHistory
     /// </summary>
     public partial class DeleteHistoryWindowControl : UserControl
     {
-        public ObservableCollection<DeleteHistoryRecordViewModel> Buttons
+        public ObservableCollection<DeleteHistoryEntry> Buttons
         {
             get
             {
@@ -22,7 +22,13 @@ namespace DeleteHistory
         public DeleteHistoryWindowControl()
         {
             this.InitializeComponent();
+            this.Buttons.CollectionChanged += this.CollectionChanged;
             DataContext = this;
+        }
+
+        private void CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            ScrollViewer.ScrollToBottom();
         }
     }
 }

@@ -65,7 +65,7 @@ namespace DeleteHistory
                         filePath = "Unknown";
                     }
 
-                    var viewModel = new DeleteHistoryRecordViewModel()
+                    var viewModel = new DeleteHistoryEntry()
                     {
                         FileName = filePath,
                         DeleteTime = DateTime.Now,

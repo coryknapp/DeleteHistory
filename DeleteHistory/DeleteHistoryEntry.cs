@@ -3,7 +3,7 @@ using System.Windows.Input;
 
 namespace DeleteHistory
 {
-    public class DeleteHistoryRecordViewModel
+    public class DeleteHistoryEntry
     {
         public string FileName { get; set; }
         
