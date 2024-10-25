@@ -22,9 +22,7 @@
                 <ItemsControl ItemsSource="{Binding Buttons}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Button HorizontalContentAlignment="Left" Command="{Binding ButtonCommand}">
-                                <ContentControl Content="{Binding Converter={StaticResource DeleteHistoryEntryValueConverter}}" />
-                            </Button>
+                            <ContentControl Content="{Binding Converter={StaticResource DeleteHistoryEntryValueConverter}}" HorizontalAlignment="Stretch" Width="Auto" />
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>

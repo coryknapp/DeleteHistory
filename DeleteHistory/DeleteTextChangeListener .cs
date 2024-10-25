@@ -8,6 +8,10 @@ using System.ComponentModel.Composition;
 using Microsoft.VisualStudio.PlatformUI;
 using System.Linq;
 using System;
+using Microsoft.VisualStudio.Text.Operations;
+using EnvDTE;
+using Community.VisualStudio.Toolkit;
+using System.Windows;
 
 namespace DeleteHistory
 {
@@ -22,29 +26,53 @@ namespace DeleteHistory
         [Import]
         internal ITextDocumentFactoryService TextDocumentFactoryService { get; set; }
 
+        [Import]
+        private ITextUndoHistoryRegistry UndoHistoryRegistry { get; set; }
+        private ITextUndoHistory _undoHistory;
+
+        private IVsTextView TextViewAdapter;
+
+        private bool UndoFlag;
+
+        private ITextDocument GetDocument()
+        {
+            IWpfTextView wpfTextView = EditorAdaptersFactoryService.GetWpfTextView(TextViewAdapter);
+
+            TextViewAdapter.GetBuffer(out var buffer);
+            if (TextDocumentFactoryService.TryGetTextDocument(wpfTextView.TextBuffer, out ITextDocument document))
+            {
+                return document;
+            }
+            else
+            {
+                throw new Exception("could not get document");
+            }
+        }
+
+
         public DeleteTextChangeListener()
         {
         }
 
         public void VsTextViewCreated(IVsTextView textViewAdapter)
         {
-            System.Diagnostics.Debug.WriteLine($"VsTextViewCreated");
-
-            IWpfTextView wpfTextView = EditorAdaptersFactoryService.GetWpfTextView(textViewAdapter);
-
-            // Obtain the text view from the adapter
-            textViewAdapter.GetBuffer(out var buffer);
-
-            // Get the ITextDocument for the view
-            if (TextDocumentFactoryService.TryGetTextDocument(wpfTextView.TextBuffer, out ITextDocument document))
+            if(TextViewAdapter != null)
             {
-                // Hook up the text changed event
-                document.TextBuffer.Changed += OnTextBufferChanged;
+                if (TextViewAdapter == textViewAdapter)
+                {
+                    throw new Exception();
+                }
+
             }
-            else
-            {
-                System.Diagnostics.Debug.WriteLine($"could not get document");
-            }
+
+            TextViewAdapter = textViewAdapter;
+
+            ITextBuffer buffer = this.GetDocument().TextBuffer;
+
+            buffer.Changed += OnTextBufferChanged;
+
+            // Get the undo history for the text buffer
+            UndoHistoryRegistry.TryGetHistory(buffer, out _undoHistory);
         }
 
         private void OnTextBufferChanged(object sender, TextContentChangedEventArgs e)
@@ -62,7 +90,7 @@ namespace DeleteHistory
                     }
                     else
                     {
-                        filePath = "Unknown";
+                        filePath = "Unknown file";
                     }
 
                     var viewModel = new DeleteHistoryEntry()
@@ -76,12 +104,18 @@ namespace DeleteHistory
                 }
             }
 
-            
+            UndoFlag = false;
         }
 
         private bool IsChangeEligible(ITextChange change) =>
             !string.IsNullOrWhiteSpace(change.OldText)
             && change.OldText.Length > DeleteHistoryOptions.Instance.MinimumBlockLength
-            && change.OldText.Count(c => c == '\n') > DeleteHistoryOptions.Instance.MinimumLineCount;
+            && change.OldText.Count(c => c == '\n') > DeleteHistoryOptions.Instance.MinimumLineCount
+            && !IsUndoAction(change);
+
+        // Still trying to figure out the best way to handle this.
+        // this at least covers the case where you undo a paste action
+        private bool IsUndoAction(ITextChange change) =>
+            change.OldText == Clipboard.GetText();
     }
 }

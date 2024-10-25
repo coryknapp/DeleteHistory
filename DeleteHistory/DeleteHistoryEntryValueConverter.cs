@@ -19,17 +19,18 @@ namespace DeleteHistory
         {
             if (value is DeleteHistoryEntry entry)
             {
-                Button button = new Button();
-
-                button.Command = new PasteCommand(entry.DeletedText);
 
                 TextBlock textBlock = new TextBlock();
+                
                 this.AddFileNameText(textBlock, entry.FileName);
                 this.AddDeleteTimeStampText(textBlock, entry.DeleteTime);
                 this.AddNewLine(textBlock);
                 this.AddDeleteHistoryText(textBlock, entry.DeletedText);
 
+                Button button = new Button();
+                button.Command = new PasteCommand(entry.DeletedText);
                 button.Content = textBlock;
+                button.HorizontalAlignment = HorizontalAlignment.Stretch;
 
                 return button;
             }
@@ -84,7 +85,8 @@ namespace DeleteHistory
                 {
                     textBlock.Inlines.Add(new Run(string.Join(Environment.NewLine, splitString.Take(DeleteHistoryOptions.Instance.TruncateLinesCount))));
                     var missingLineCount = splitString.Count() - DeleteHistoryOptions.Instance.TruncateLinesCount;
-                    textBlock.Inlines.Add(new Run($"Plus ${missingLineCount} additional lines.") { FontWeight = FontWeights.Bold });
+                    this.AddNewLine(textBlock);
+                    textBlock.Inlines.Add(new Run($"Plus {missingLineCount} additional lines.") { FontWeight = FontWeights.Bold });
 
                     return textBlock;
                 }
@@ -96,7 +98,7 @@ namespace DeleteHistory
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException(); // No need to convert back in this case
+            throw new NotImplementedException();
         }
     }
 }
