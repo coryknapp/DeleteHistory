@@ -11,7 +11,7 @@ namespace DeleteHistory
     /// </summary>
     public partial class DeleteHistoryWindowControl : UserControl
     {
-        public ObservableCollection<DeleteHistoryEntry> Buttons
+        public ObservableLinkedList<DeleteHistoryEntry> Buttons
         {
             get
             {

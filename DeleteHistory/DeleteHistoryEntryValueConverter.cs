@@ -20,17 +20,23 @@ namespace DeleteHistory
             if (value is DeleteHistoryEntry entry)
             {
 
-                TextBlock textBlock = new TextBlock();
-                
+                TextBlock textBlock = new TextBlock()
+                {
+                    HorizontalAlignment = HorizontalAlignment.Stretch,
+                };
+
                 this.AddFileNameText(textBlock, entry.FileName);
                 this.AddDeleteTimeStampText(textBlock, entry.DeleteTime);
                 this.AddNewLine(textBlock);
                 this.AddDeleteHistoryText(textBlock, entry.DeletedText);
 
-                Button button = new Button();
-                button.Command = new PasteCommand(entry.DeletedText);
-                button.Content = textBlock;
-                button.HorizontalAlignment = HorizontalAlignment.Stretch;
+                Button button = new Button()
+                {
+                    Command = new PasteCommand(entry.DeletedText),
+                    Content = textBlock,
+                    HorizontalAlignment = HorizontalAlignment.Stretch,
+                    HorizontalContentAlignment = HorizontalAlignment.Stretch,
+                };
 
                 return button;
             }

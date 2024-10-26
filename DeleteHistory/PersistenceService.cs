@@ -31,7 +31,7 @@ namespace DeleteHistory
             }
         }
 
-        public void SaveHistory(IList<DeleteHistoryEntry> history)
+        public void SaveHistory(IEnumerable<DeleteHistoryEntry> history)
         {
             string jsonString = JsonSerializer.Serialize(history.ToList());
             this.Store.SetString(CollectionPath, HistoryKey, jsonString);

@@ -50,5 +50,11 @@ namespace DeleteHistory
         [Description("Only display this many lines in the history window (if Truncate lines is checked.)")]
         [DefaultValue(12)]
         public int TruncateLinesCount { get; set; } = 12;
+
+        [Category("Retention")]
+        [DisplayName("Maximum History Count")]
+        [Description("Maximum history count (zero for unlimited)")]
+        [DefaultValue(256)]
+        public int MaximumHistoryCount { get; set; } = 256;
     }
 }

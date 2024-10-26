@@ -17,7 +17,7 @@
     </UserControl.Resources>
     
     <Grid>
-        <ScrollViewer x:Name="ScrollViewer">
+        <ScrollViewer x:Name="ScrollViewer" VerticalScrollBarVisibility="Visible">
             <StackPanel x:Name="ButtonStackPanel">
                 <ItemsControl ItemsSource="{Binding Buttons}">
                     <ItemsControl.ItemTemplate>

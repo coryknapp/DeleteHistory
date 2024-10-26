@@ -58,6 +58,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="DeleteHistoryEntryValueConverter.cs" />
+    <Compile Include="ObservableLinkedList.cs" />
     <Compile Include="PasteCommand.cs" />
     <Compile Include="PersistenceService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

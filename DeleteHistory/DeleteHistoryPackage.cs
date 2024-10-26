@@ -38,7 +38,7 @@ namespace DeleteHistory
     {
         public static DeleteHistoryPackage Package { get; set; }
 
-        public ObservableCollection<DeleteHistoryEntry> Entries { get; set; }
+        public ObservableLinkedList<DeleteHistoryEntry> Entries { get; set; }
 
         public PersistenceService PersistenceService { get; set; }
 
@@ -56,14 +56,19 @@ namespace DeleteHistory
 
             this.PersistenceService = new PersistenceService();
 
-            this.Entries = new ObservableCollection<DeleteHistoryEntry>(this.PersistenceService.LoadHistory());
+            this.Entries = new ObservableLinkedList<DeleteHistoryEntry>(this.PersistenceService.LoadHistory());
 
             Package = this;
         }
 
         public void AddHistory(DeleteHistoryEntry viewModel)
         {
-            Entries.Add(viewModel);
+            if(DeleteHistoryOptions.Instance.MaximumHistoryCount > 0 && Entries.Count >= DeleteHistoryOptions.Instance.MaximumHistoryCount)
+            {
+                Entries.RemoveFirst();
+            }
+
+            Entries.AddLast(viewModel);
             this.PersistenceService.SaveHistory(Entries);
         }
     }
