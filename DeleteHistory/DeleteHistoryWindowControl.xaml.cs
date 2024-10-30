@@ -29,6 +29,8 @@ namespace DeleteHistory
 
             this.Buttons.CollectionChanged += this.CollectionChanged;
             DataContext = this;
+
+            ScrollViewer.ScrollToBottom();
         }
 
         private void CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
