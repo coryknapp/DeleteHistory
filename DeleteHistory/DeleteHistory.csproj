@@ -48,6 +48,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="DeleteHistoryEntry.cs" />
+    <Compile Include="DeleteHistoryViewModel.cs" />
     <Compile Include="DeleteHistoryWindow.cs" />
     <Compile Include="DeleteHistoryWindowCommand.cs" />
     <Compile Include="DeleteHistoryWindowControl.xaml.cs">

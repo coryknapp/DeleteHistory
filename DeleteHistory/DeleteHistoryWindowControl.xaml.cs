@@ -19,9 +19,14 @@ namespace DeleteHistory
             }
         }
 
+        public DeleteHistoryViewModel ViewModel { get; set; }
+
         public DeleteHistoryWindowControl()
         {
             this.InitializeComponent();
+
+            ViewModel = new DeleteHistoryViewModel();
+
             this.Buttons.CollectionChanged += this.CollectionChanged;
             DataContext = this;
         }

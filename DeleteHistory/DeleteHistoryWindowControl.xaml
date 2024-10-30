@@ -15,10 +15,12 @@
     <UserControl.Resources>
         <local:DeleteHistoryEntryValueConverter x:Key="DeleteHistoryEntryValueConverter" />
     </UserControl.Resources>
-    
-    <Grid>
-        <ScrollViewer x:Name="ScrollViewer" VerticalScrollBarVisibility="Visible">
-            <StackPanel x:Name="ButtonStackPanel">
+
+    <DockPanel LastChildFill="True">
+        <TextBox x:Name="FilterTextBox" Width="200" Margin="10" DockPanel.Dock="Top"
+                 Text="{Binding ViewModel.FilterString, UpdateSourceTrigger=PropertyChanged}"/>
+        <Grid x:Name="ScrollViewerGrid" DockPanel.Dock="Bottom">
+            <ScrollViewer x:Name="ScrollViewer" VerticalScrollBarVisibility="Auto">
                 <ItemsControl ItemsSource="{Binding Buttons}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
@@ -26,7 +28,7 @@
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-            </StackPanel>
-        </ScrollViewer>
-    </Grid>
+            </ScrollViewer>
+        </Grid>
+    </DockPanel>
 </UserControl>
