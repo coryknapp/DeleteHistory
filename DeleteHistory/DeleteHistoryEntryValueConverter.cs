@@ -61,11 +61,11 @@ namespace DeleteHistory
                 string dateText;
                 if(time.Date == DateTime.Today)
                 {
-                    dateText = DateTime.Today.ToString("T");
+                    dateText = $" - {time.ToString("T")}";
                 }
                 else
                 {
-                    dateText = DateTime.Today.ToString("F");
+                    dateText = time.ToString("F");
                     
                     // if the date is really long, put it on a new line
                     this.AddNewLine(textBlock);
